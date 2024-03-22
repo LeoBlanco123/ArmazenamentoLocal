@@ -30,6 +30,14 @@ export default function App() {
     setListProdutos(JSON.parse(p))
   }
 
+  async function deletarProduto(index) {
+    const tempDados = listProdutos;
+    const dados = tempDados.filter((item, ind) => {
+      return ind !== index
+    })
+    setListProdutos(dados)
+  }
+
   return (
     <View style={styles.container}>
       <Text>CADASTRO</Text>
@@ -61,17 +69,31 @@ export default function App() {
         data={listProdutos}
 
         /* Renderizando itens para exibir na FlatLIst*/
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
 
           return (
-            <View style={{ width: 300, borderWidth: 1, borderRadius: 15, height: 50, alignItems: 'center', justifyContent: 'center', marginVertical: 3 }}>
+            <View style={{
+              width: 300,
+              borderWidth: 1,
+              borderRadius: 15,
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginVertical: 3
+            }}>
               <View>
                 <Text style={{ fontSize: 18 }}>NOME:{item.nome} PREÇO:{item.preco}</Text>
               </View>
-              <TouchableOpacity style={{
-                flexDirection: 'row',
-                justifyContent: "space-around", backgroundColor: 'red', borderRadius: 12
-              }}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: "space-around",
+                  backgroundColor: 'red',
+                  borderRadius: 12
+                }}
+                onPress={() => {
+                  deletarProduto(index);
+                }}>
                 <Text>EXCLUIR</Text>
               </TouchableOpacity>
             </View>
